@@ -1,0 +1,53 @@
+<div class="welcome-container">
+  <div class="welcome-content">
+    <header class="welcome-header">
+      <h1>⚽ Liga de Futebol</h1>
+      <p class="subtitle">Sistema de Gerenciamento de Futebol</p>
+    </header>
+
+    <main class="main-sections">
+      <div class="sections-grid">
+        <div class="section-card" (click)="navigateToJogadores()">
+          <div class="card-icon">👤</div>
+          <h3>Jogadores</h3>
+          <p>Gerenciar jogadores e suas informações</p>
+        </div>
+
+        <div class="section-card" (click)="navigateToTimes()">
+          <div class="card-icon">🏆</div>
+          <h3>Times</h3>
+          <p>Visualizar e gerenciar times cadastrados</p>
+        </div>
+
+        <div class="section-card" (click)="navigateToContratos()">
+          <div class="card-icon">📄</div>
+          <h3>Contratos</h3>
+          <p>Gerenciar contratos de jogadores</p>
+        </div>
+
+        <div class="section-card" (click)="navigateToJogadorRestricoes()">
+          <div class="card-icon">⚠️</div>
+          <h3>Restrições de Jogadores</h3>
+          <p>Visualizar restrições de jogadores</p>
+        </div>
+
+        <div class="section-card" (click)="navigateToTimeRestricoes()">
+          <div class="card-icon">🚫</div>
+          <h3>Restrições de Times</h3>
+          <p>Visualizar restrições de times</p>
+        </div>
+
+        <div class="section-card login-card" (click)="navigateToLogin()">
+          <div class="card-icon">🔐</div>
+          <h3>Fazer Login</h3>
+          <p>Acessar área administrativa</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="welcome-footer">
+      <p>&copy; 2024 Liga de Futebol - Sistema de Gerenciamento</p>
+    </footer>
+  </div>
+</div>
+

@@ -1,0 +1,93 @@
+<div class="restricoes-container">
+  <header class="page-header">
+    <div class="header-content">
+      <h1>⚠️ Restrições de Jogadores</h1>
+      <button class="btn-back" (click)="goBack()">← Voltar</button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="content-wrapper">
+      <div class="section-info">
+        <h2>Restrições de Jogadores</h2>
+        <p>Visualize todas as restrições aplicadas aos jogadores do sistema.</p>
+      </div>
+
+      <div *ngIf="isLoading" class="loading">
+        <div class="loading-spinner"></div>
+        <p>Carregando restrições...</p>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        <div class="error-icon">⚠️</div>
+        <div class="error-text">
+          <h3>Erro ao carregar dados</h3>
+          <p>{{ errorMessage }}</p>
+        </div>
+      </div>
+
+      <div *ngIf="!isLoading && !errorMessage" class="restricoes-section">
+        <div class="stats-bar">
+          <div class="stat-item">
+            <span class="stat-number">{{ restricoes.length }}</span>
+            <span class="stat-label">Restrições Cadastradas</span>
+          </div>
+        </div>
+
+        <div class="restricoes-grid" *ngIf="restricoes.length > 0">
+          <div class="restricao-card" *ngFor="let restricao of restricoes" 
+               [class.restricao-inativa]="!isRestricaoAtiva(restricao.dataFim)">
+            <div class="card-header">
+              <div class="restriction-icon">⚠️</div>
+              <div class="restriction-basic-info">
+                <h3>Restrição #{{ restricao.id }}</h3>
+                <span class="status-badge" 
+                      [class.status-ativa]="isRestricaoAtiva(restricao.dataFim)"
+                      [class.status-inativa]="!isRestricaoAtiva(restricao.dataFim)">
+                  {{ isRestricaoAtiva(restricao.dataFim) ? 'Ativa' : 'Inativa' }}
+                </span>
+              </div>
+            </div>
+            
+            <div class="card-body">
+              <div class="info-section" *ngIf="restricao.jogador">
+                <h4>👤 Jogador</h4>
+                <div class="info-row">
+                  <span class="info-label">Nome:</span>
+                  <span class="info-value">{{ restricao.jogador.nome }}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">CPF:</span>
+                  <span class="info-value">{{ restricao.jogador.cpf || 'Não informado' }}</span>
+                </div>
+              </div>
+
+              <div class="info-section">
+                <h4>📋 Detalhes da Restrição</h4>
+                <div class="info-row">
+                  <span class="info-label">Descrição:</span>
+                  <span class="info-value">{{ restricao.descricao || 'Não informado' }}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Data de Início:</span>
+                  <span class="info-value">{{ formatarData(restricao.dataInicio) }}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Data de Fim:</span>
+                  <span class="info-value">{{ restricao.dataFim ? formatarData(restricao.dataFim) : 'Indefinida' }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="restricoes.length === 0" class="no-data">
+          <div class="no-data-icon">✅</div>
+          <h3>Nenhuma restrição encontrada</h3>
+          <p>Não há restrições de jogadores cadastradas no sistema.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+

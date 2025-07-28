@@ -1,0 +1,103 @@
+<div class="editar-time-container">
+  <header class="page-header">
+    <div class="header-content">
+      <h1>✏️ Editar Time</h1>
+      <button class="btn-back" (click)="goBack()">← Voltar</button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="content-wrapper">
+      <div *ngIf="isLoadingTime" class="loading">
+        <div class="loading-spinner"></div>
+        <p>Carregando dados do time...</p>
+      </div>
+
+      <div *ngIf="!isLoadingTime" class="form-section">
+        <div class="form-header">
+          <h2>Editar Time</h2>
+          <p *ngIf="time">Editando: <strong>{{ time.nome }}</strong> (ID: {{ time.id }})</p>
+        </div>
+
+        <div *ngIf="successMessage" class="success-message">
+          <div class="success-icon">✅</div>
+          <div class="success-text">
+            <h3>Sucesso!</h3>
+            <p>{{ successMessage }}</p>
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-message">
+          <div class="error-icon">⚠️</div>
+          <div class="error-text">
+            <h3>Erro</h3>
+            <p>{{ errorMessage }}</p>
+          </div>
+        </div>
+
+        <form [formGroup]="timeForm" (ngSubmit)="onSubmit()" class="time-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nome">Nome do Time *</label>
+              <input 
+                type="text" 
+                id="nome" 
+                formControlName="nome"
+                [class.error]="isFieldInvalid('nome')"
+                placeholder="Digite o nome do time">
+              <div *ngIf="isFieldInvalid('nome')" class="field-error">
+                {{ getFieldError('nome') }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cidadeId">Cidade</label>
+              <select id="cidadeId" formControlName="cidadeId" [disabled]="isLoadingCidades">
+                <option value="">Selecione uma cidade (opcional)</option>
+                <option *ngFor="let cidade of cidades" [value]="cidade.id">
+                  {{ cidade.nome }}{{ cidade.estado ? ' - ' + cidade.estado : '' }}
+                </option>
+              </select>
+              <div *ngIf="isLoadingCidades" class="loading-info">
+                Carregando cidades...
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="estadioId">Estádio</label>
+              <select id="estadioId" formControlName="estadioId" [disabled]="isLoadingEstadios">
+                <option value="">Selecione um estádio (opcional)</option>
+                <option *ngFor="let estadio of estadios" [value]="estadio.id">
+                  {{ estadio.nome }}{{ estadio.capacidade ? ' (' + (estadio.capacidade | number) + ' pessoas)' : '' }}
+                </option>
+              </select>
+              <div *ngIf="isLoadingEstadios" class="loading-info">
+                Carregando estádios...
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button 
+              type="button" 
+              class="btn-cancel" 
+              (click)="goBack()"
+              [disabled]="isLoading">
+              Cancelar
+            </button>
+            <button 
+              type="submit" 
+              class="btn-submit" 
+              [disabled]="isLoading || timeForm.invalid">
+              <span *ngIf="isLoading" class="loading-spinner"></span>
+              {{ isLoading ? 'Salvando...' : 'Salvar Alterações' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+

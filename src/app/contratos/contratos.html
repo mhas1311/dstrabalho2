@@ -1,0 +1,130 @@
+<div class="contratos-container">
+  <header class="page-header">
+    <div class="header-content">
+      <h1>📄 Contratos</h1>
+      <div class="actions">
+        <button class="btn-add" (click)="adicionarContrato()">➕ Adicionar Contrato</button>
+        <button class="btn-back" (click)="goBack()">← Voltar</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="content-wrapper">
+      <div class="section-info">
+        <h2>Lista de Contratos Cadastrados</h2>
+        <p>Visualize e gerencie todos os contratos de jogadores e funcionários.</p>
+      </div>
+
+      <div *ngIf="isLoading" class="loading">
+        <div class="loading-spinner"></div>
+        <p>Carregando contratos...</p>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        <div class="error-icon">⚠️</div>
+        <div class="error-text">
+          <h3>Erro ao carregar dados</h3>
+          <p>{{ errorMessage }}</p>
+        </div>
+      </div>
+
+      <div *ngIf="!isLoading && !errorMessage" class="contratos-section">
+        <div class="stats-bar">
+          <div class="stat-item">
+            <span class="stat-number">{{ contratos.length }}</span>
+            <span class="stat-label">Contratos Cadastrados</span>
+          </div>
+        </div>
+
+        <div class="contratos-grid" *ngIf="contratos.length > 0">
+          <div class="contrato-card" *ngFor="let contrato of contratos" 
+               [class.contrato-vencido]="isContratoVencido(contrato.dataFim)">
+            <div class="card-header">
+              <div class="contract-icon">📄</div>
+              <div class="contract-basic-info">
+                <h3>Contrato #{{ contrato.id }}</h3>
+                <span class="status-badge" [class]="getStatusClass(contrato.situacao)">
+                  {{ contrato.situacao || 'Não informado' }}
+                </span>
+              </div>
+            </div>
+            
+            <div class="card-body">
+              <div class="info-section" *ngIf="contrato.pessoa">
+                <h4>👤 Pessoa</h4>
+                <div class="info-row">
+                  <span class="info-label">Nome:</span>
+                  <span class="info-value">{{ contrato.pessoa.nome }}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">CPF:</span>
+                  <span class="info-value">{{ contrato.pessoa.cpf || 'Não informado' }}</span>
+                </div>
+              </div>
+
+              <div class="info-section" *ngIf="contrato.time">
+                <h4>🏆 Time</h4>
+                <div class="info-row">
+                  <span class="info-label">Nome:</span>
+                  <span class="info-value">{{ contrato.time.nome }}</span>
+                </div>
+                <div class="info-row" *ngIf="contrato.time.cidade">
+                  <span class="info-label">Cidade:</span>
+                  <span class="info-value">{{ contrato.time.cidade?.nome }}</span>
+                </div>
+              </div>
+
+              <div class="info-section">
+                <h4>📋 Detalhes do Contrato</h4>
+                <div class="info-row">
+                  <span class="info-label">Tipo:</span>
+                  <span class="info-value">{{ contrato.tipo || 'Não informado' }}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Função:</span>
+                  <span class="info-value">{{ contrato.funcao || 'Não informado' }}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Data de Início:</span>
+                  <span class="info-value">{{ formatarData(contrato.dataInicio) }}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Data de Fim:</span>
+                  <span class="info-value">{{ formatarData(contrato.dataFim) }}</span>
+                </div>
+                <div class="info-row" *ngIf="contrato.observacao">
+                  <span class="info-label">Observação:</span>
+                  <span class="info-value">{{ contrato.observacao }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="btn-edit" (click)="editarContrato(contrato.id)">Editar</button>
+              <button class="btn-delete" (click)="confirmarExclusao(contrato.id)">Excluir</button>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="contratos.length === 0" class="no-data">
+          <div class="no-data-icon">📋</div>
+          <h3>Nenhum contrato encontrado</h3>
+          <p>Não há contratos cadastrados no sistema no momento.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div *ngIf="showDeleteConfirm" class="modal-overlay">
+    <div class="modal-content">
+      <h3>Confirmar Exclusão</h3>
+      <p>Tem certeza que deseja excluir este contrato? Esta ação não pode ser desfeita.</p>
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="cancelarExclusao()">Cancelar</button>
+        <button class="btn-confirm" (click)="excluirContrato()">Excluir</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

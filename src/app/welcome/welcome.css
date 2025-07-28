@@ -1,0 +1,153 @@
+.welcome-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.welcome-content {
+  max-width: 1200px;
+  width: 100%;
+  text-align: center;
+}
+
+.welcome-header {
+  margin-bottom: 50px;
+  color: white;
+}
+
+.welcome-header h1 {
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  opacity: 0.9;
+  font-weight: 300;
+}
+
+.main-sections {
+  margin-bottom: 50px;
+}
+
+.sections-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.section-card {
+  background: white;
+  border-radius: 15px;
+  padding: 30px 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.section-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.login-card {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+}
+
+.login-card:hover {
+  background: linear-gradient(135deg, #218838 0%, #1ea080 100%);
+}
+
+.card-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.section-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: 600;
+}
+
+.login-card h3 {
+  color: white;
+}
+
+.section-card p {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.login-card p {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.welcome-footer {
+  color: white;
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .welcome-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .sections-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .section-card {
+    padding: 25px 15px;
+  }
+  
+  .card-icon {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-container {
+    padding: 15px;
+  }
+  
+  .welcome-header h1 {
+    font-size: 2rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+  }
+  
+  .section-card {
+    padding: 20px 15px;
+  }
+  
+  .section-card h3 {
+    font-size: 1.3rem;
+  }
+  
+  .section-card p {
+    font-size: 0.9rem;
+  }
+}
+

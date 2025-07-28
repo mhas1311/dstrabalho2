@@ -1,0 +1,114 @@
+<div class="jogadores-container">
+  <header class="page-header">
+    <div class="header-content">
+      <h1>👤 Jogadores</h1>
+      <div class="header-actions">
+        <button class="btn-add" (click)="adicionarJogador()">➕ Adicionar Jogador</button>
+        <button class="btn-back" (click)="goBack()">← Voltar</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="content-wrapper">
+      <div class="section-info">
+        <h2>Lista de Jogadores Cadastrados</h2>
+        <p>Visualize informações detalhadas sobre todos os jogadores cadastrados no sistema.</p>
+      </div>
+
+      <div *ngIf="isLoading" class="loading">
+        <div class="loading-spinner"></div>
+        <p>Carregando jogadores...</p>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        <div class="error-icon">⚠️</div>
+        <div class="error-text">
+          <h3>Erro ao carregar dados</h3>
+          <p>{{ errorMessage }}</p>
+        </div>
+      </div>
+
+      <div *ngIf="!isLoading && !errorMessage" class="jogadores-section">
+        <div class="stats-bar">
+          <div class="stat-item">
+            <span class="stat-number">{{ jogadores.length }}</span>
+            <span class="stat-label">Jogadores Cadastrados</span>
+          </div>
+        </div>
+
+        <div class="jogadores-grid" *ngIf="jogadores.length > 0">
+          <div class="jogador-card" *ngFor="let jogador of jogadores">
+            <div class="card-header">
+              <div class="player-avatar">👤</div>
+              <div class="player-basic-info">
+                <h3>{{ jogador.nome }}</h3>
+                <span class="player-id">ID: {{ jogador.id }}</span>
+              </div>
+              <div class="card-actions">
+                <button class="btn-edit" (click)="editarJogador(jogador.id)" title="Editar jogador">
+                  ✏️
+                </button>
+                <button class="btn-delete" (click)="confirmarExclusao(jogador)" title="Excluir jogador">
+                  🗑️
+                </button>
+              </div>
+            </div>
+            
+            <div class="card-body">
+              <div class="info-row">
+                <span class="info-label">CPF:</span>
+                <span class="info-value">{{ jogador.cpf || 'Não informado' }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Data de Nascimento:</span>
+                <span class="info-value">{{ formatarData(jogador.dataNascimento) }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Idade:</span>
+                <span class="info-value">{{ calcularIdade(jogador.dataNascimento) }} anos</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Cidade:</span>
+                <span class="info-value">{{ jogador.cidade?.nome || 'Não informado' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="jogadores.length === 0" class="no-data">
+          <div class="no-data-icon">👤</div>
+          <h3>Nenhum jogador encontrado</h3>
+          <p>Não há jogadores cadastrados no sistema.</p>
+          <button class="btn-add-first" (click)="adicionarJogador()">
+            ➕ Adicionar Primeiro Jogador
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal de confirmação de exclusão -->
+  <div *ngIf="jogadorParaExcluir" class="modal-overlay" (click)="cancelarExclusao()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Confirmar Exclusão</h3>
+      </div>
+      <div class="modal-body">
+        <p>Tem certeza que deseja excluir o jogador:</p>
+        <p><strong>{{ jogadorParaExcluir.nome }}</strong> (ID: {{ jogadorParaExcluir.id }})?</p>
+        <p class="warning-text">Esta ação não pode ser desfeita.</p>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel-modal" (click)="cancelarExclusao()" [disabled]="isExcluindo">
+          Cancelar
+        </button>
+        <button class="btn-confirm-delete" (click)="excluirJogador()" [disabled]="isExcluindo">
+          <span *ngIf="isExcluindo" class="loading-spinner"></span>
+          {{ isExcluindo ? 'Excluindo...' : 'Excluir' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

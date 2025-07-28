@@ -1,0 +1,51 @@
+<div class="home-container">
+  <header class="header">
+    <div class="header-content">
+      <h1>Liga de Futebol</h1>
+      <div class="user-info">
+        <span *ngIf="usuario">Bem-vindo, {{ usuario.nome || usuario.login }}!</span>
+        <button class="btn-back" (click)="goBack()">Voltar</button>
+        <button class="btn-logout" (click)="logout()">Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="content-wrapper">
+      <section class="user-section">
+        <h2>Informações do Usuário</h2>
+        <div class="user-card" *ngIf="usuario">
+          <p><strong>ID:</strong> {{ usuario.id }}</p>
+          <p><strong>Login:</strong> {{ usuario.login }}</p>
+          <p><strong>Nome:</strong> {{ usuario.nome || 'Não informado' }}</p>
+        </div>
+      </section>
+
+      <section class="times-section">
+        <h2>Times Cadastrados</h2>
+        
+        <div *ngIf="isLoading" class="loading">
+          Carregando times...
+        </div>
+        
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+        
+        <div *ngIf="!isLoading && !errorMessage" class="times-grid">
+          <div class="time-card" *ngFor="let time of times">
+            <h3>{{ time.nome }}</h3>
+            <p *ngIf="time.cidade"><strong>Cidade:</strong> {{ time.cidade.nome }}</p>
+            <p *ngIf="time.cidade && time.cidade.estado"><strong>Estado:</strong> {{ time.cidade.estado }}</p>
+            <p *ngIf="time.estadio"><strong>Estádio:</strong> {{ time.estadio.nome }}</p>
+          </div>
+          
+          <div *ngIf="times.length === 0" class="no-times">
+            Nenhum time cadastrado no sistema.
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+

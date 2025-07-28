@@ -1,0 +1,171 @@
+<div class="editar-contrato-container">
+  <header class="page-header">
+    <div class="header-content">
+      <h1>✏️ Editar Contrato</h1>
+      <button class="btn-back" (click)="goBack()">← Voltar</button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="content-wrapper">
+      <div *ngIf="isLoadingContrato" class="loading">
+        <div class="loading-spinner"></div>
+        <p>Carregando dados do contrato...</p>
+      </div>
+
+      <div *ngIf="!isLoadingContrato" class="form-section">
+        <div class="form-header">
+          <h2>Editar Contrato</h2>
+          <p *ngIf="contrato">Editando: <strong>Contrato #{{ contrato.id }}</strong></p>
+        </div>
+
+        <div *ngIf="successMessage" class="success-message">
+          <div class="success-icon">✅</div>
+          <div class="success-text">
+            <h3>Sucesso!</h3>
+            <p>{{ successMessage }}</p>
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-message">
+          <div class="error-icon">⚠️</div>
+          <div class="error-text">
+            <h3>Erro</h3>
+            <p>{{ errorMessage }}</p>
+          </div>
+        </div>
+
+        <form [formGroup]="contratoForm" (ngSubmit)="onSubmit()" class="contrato-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="tipo">Tipo de Contrato *</label>
+              <select id="tipo" formControlName="tipo" [class.error]="isFieldInvalid('tipo')">
+                <option value="">Selecione o tipo</option>
+                <option value="JOGADOR">Jogador</option>
+                <option value="TECNICO">Técnico</option>
+                <option value="FUNCIONARIO">Funcionário</option>
+                <option value="DIRIGENTE">Dirigente</option>
+              </select>
+              <div *ngIf="isFieldInvalid('tipo')" class="field-error">
+                {{ getFieldError('tipo') }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="funcao">Função *</label>
+              <input 
+                type="text" 
+                id="funcao" 
+                formControlName="funcao"
+                [class.error]="isFieldInvalid('funcao')"
+                placeholder="Ex: Atacante, Técnico Principal, etc.">
+              <div *ngIf="isFieldInvalid('funcao')" class="field-error">
+                {{ getFieldError('funcao') }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="dataInicio">Data de Início *</label>
+              <input 
+                type="date" 
+                id="dataInicio" 
+                formControlName="dataInicio"
+                [class.error]="isFieldInvalid('dataInicio')">
+              <div *ngIf="isFieldInvalid('dataInicio')" class="field-error">
+                {{ getFieldError('dataInicio') }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="dataFim">Data de Fim *</label>
+              <input 
+                type="date" 
+                id="dataFim" 
+                formControlName="dataFim"
+                [class.error]="isFieldInvalid('dataFim')">
+              <div *ngIf="isFieldInvalid('dataFim')" class="field-error">
+                {{ getFieldError('dataFim') }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="situacao">Situação *</label>
+              <select id="situacao" formControlName="situacao" [class.error]="isFieldInvalid('situacao')">
+                <option value="">Selecione a situação</option>
+                <option value="ATIVO">Ativo</option>
+                <option value="INATIVO">Inativo</option>
+                <option value="SUSPENSO">Suspenso</option>
+                <option value="RESCINDIDO">Rescindido</option>
+              </select>
+              <div *ngIf="isFieldInvalid('situacao')" class="field-error">
+                {{ getFieldError('situacao') }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="pessoaId">Pessoa</label>
+              <select id="pessoaId" formControlName="pessoaId" [disabled]="isLoadingPessoas">
+                <option value="">Selecione uma pessoa (opcional)</option>
+                <option *ngFor="let pessoa of pessoas" [value]="pessoa.id">
+                  {{ pessoa.nome }}
+                </option>
+              </select>
+              <div *ngIf="isLoadingPessoas" class="loading-info">
+                Carregando pessoas...
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="timeId">Time</label>
+              <select id="timeId" formControlName="timeId" [disabled]="isLoadingTimes">
+                <option value="">Selecione um time (opcional)</option>
+                <option *ngFor="let time of times" [value]="time.id">
+                  {{ time.nome }}
+                </option>
+              </select>
+              <div *ngIf="isLoadingTimes" class="loading-info">
+                Carregando times...
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="observacao">Observações</label>
+              <textarea 
+                id="observacao" 
+                formControlName="observacao"
+                rows="3"
+                placeholder="Observações adicionais sobre o contrato (opcional)">
+              </textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button 
+              type="button" 
+              class="btn-cancel" 
+              (click)="goBack()"
+              [disabled]="isLoading">
+              Cancelar
+            </button>
+            <button 
+              type="submit" 
+              class="btn-submit" 
+              [disabled]="isLoading || contratoForm.invalid">
+              <span *ngIf="isLoading" class="loading-spinner"></span>
+              {{ isLoading ? 'Salvando...' : 'Salvar Alterações' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+

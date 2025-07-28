@@ -1,0 +1,118 @@
+<div class="editar-jogador-container">
+  <header class="page-header">
+    <div class="header-content">
+      <h1>✏️ Editar Jogador</h1>
+      <button class="btn-back" (click)="goBack()">← Voltar</button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="content-wrapper">
+      <div *ngIf="isLoadingJogador" class="loading">
+        <div class="loading-spinner"></div>
+        <p>Carregando dados do jogador...</p>
+      </div>
+
+      <div *ngIf="!isLoadingJogador" class="form-section">
+        <div class="form-header">
+          <h2>Editar Jogador</h2>
+          <p *ngIf="jogador">Editando: <strong>{{ jogador.nome }}</strong> (ID: {{ jogador.id }})</p>
+        </div>
+
+        <div *ngIf="successMessage" class="success-message">
+          <div class="success-icon">✅</div>
+          <div class="success-text">
+            <h3>Sucesso!</h3>
+            <p>{{ successMessage }}</p>
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-message">
+          <div class="error-icon">⚠️</div>
+          <div class="error-text">
+            <h3>Erro</h3>
+            <p>{{ errorMessage }}</p>
+          </div>
+        </div>
+
+        <form [formGroup]="jogadorForm" (ngSubmit)="onSubmit()" class="jogador-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nome">Nome Completo *</label>
+              <input 
+                type="text" 
+                id="nome" 
+                formControlName="nome"
+                [class.error]="isFieldInvalid('nome')"
+                placeholder="Digite o nome completo do jogador">
+              <div *ngIf="isFieldInvalid('nome')" class="field-error">
+                {{ getFieldError('nome') }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cpf">CPF *</label>
+              <input 
+                type="text" 
+                id="cpf" 
+                formControlName="cpf"
+                [class.error]="isFieldInvalid('cpf')"
+                placeholder="Digite apenas os números (11 dígitos)"
+                maxlength="11">
+              <div *ngIf="isFieldInvalid('cpf')" class="field-error">
+                {{ getFieldError('cpf') }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="dataNascimento">Data de Nascimento *</label>
+              <input 
+                type="date" 
+                id="dataNascimento" 
+                formControlName="dataNascimento"
+                [class.error]="isFieldInvalid('dataNascimento')">
+              <div *ngIf="isFieldInvalid('dataNascimento')" class="field-error">
+                {{ getFieldError('dataNascimento') }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cidadeId">Cidade</label>
+              <select id="cidadeId" formControlName="cidadeId" [disabled]="isLoadingCidades">
+                <option value="">Selecione uma cidade (opcional)</option>
+                <option *ngFor="let cidade of cidades" [value]="cidade.id">
+                  {{ cidade.nome }}{{ cidade.estado ? ' - ' + cidade.estado : '' }}
+                </option>
+              </select>
+              <div *ngIf="isLoadingCidades" class="loading-cidades">
+                Carregando cidades...
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button 
+              type="button" 
+              class="btn-cancel" 
+              (click)="goBack()"
+              [disabled]="isLoading">
+              Cancelar
+            </button>
+            <button 
+              type="submit" 
+              class="btn-submit" 
+              [disabled]="isLoading || jogadorForm.invalid">
+              <span *ngIf="isLoading" class="loading-spinner"></span>
+              {{ isLoading ? 'Salvando...' : 'Salvar Alterações' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+

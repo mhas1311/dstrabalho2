@@ -1,0 +1,114 @@
+<div class="times-container">
+  <header class="page-header">
+    <div class="header-content">
+      <h1>🏆 Times</h1>
+      <div class="header-actions">
+        <button class="btn-add" (click)="adicionarTime()">➕ Adicionar Time</button>
+        <button class="btn-back" (click)="goBack()">← Voltar</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="content-wrapper">
+      <div class="section-info">
+        <h2>Lista de Times Cadastrados</h2>
+        <p>Visualize e gerencie todos os times cadastrados no sistema.</p>
+      </div>
+
+      <div *ngIf="isLoading" class="loading">
+        <div class="loading-spinner"></div>
+        <p>Carregando times...</p>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        <div class="error-icon">⚠️</div>
+        <div class="error-text">
+          <h3>Erro ao carregar dados</h3>
+          <p>{{ errorMessage }}</p>
+        </div>
+      </div>
+
+      <div *ngIf="!isLoading && !errorMessage" class="times-section">
+        <div class="stats-bar">
+          <div class="stat-item">
+            <span class="stat-number">{{ times.length }}</span>
+            <span class="stat-label">Times Cadastrados</span>
+          </div>
+        </div>
+
+        <div class="times-grid" *ngIf="times.length > 0">
+          <div class="time-card" *ngFor="let time of times">
+            <div class="card-header">
+              <div class="team-avatar">🏆</div>
+              <div class="team-basic-info">
+                <h3>{{ time.nome }}</h3>
+                <span class="team-id">ID: {{ time.id }}</span>
+              </div>
+              <div class="card-actions">
+                <button class="btn-edit" (click)="editarTime(time.id)" title="Editar time">
+                  ✏️
+                </button>
+                <button class="btn-delete" (click)="confirmarExclusao(time)" title="Excluir time">
+                  🗑️
+                </button>
+              </div>
+            </div>
+            
+            <div class="card-body">
+              <div class="info-row">
+                <span class="info-label">Cidade:</span>
+                <span class="info-value">{{ time.cidade?.nome || 'Não informado' }}</span>
+              </div>
+              <div class="info-row" *ngIf="time.cidade?.estado">
+                <span class="info-label">Estado:</span>
+                <span class="info-value">{{ time.cidade?.estado }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Estádio:</span>
+                <span class="info-value">{{ time.estadio?.nome || 'Não informado' }}</span>
+              </div>
+              <div class="info-row" *ngIf="time.estadio?.capacidade">
+                <span class="info-label">Capacidade:</span>
+                <span class="info-value">{{ time.estadio?.capacidade | number }} pessoas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="times.length === 0" class="no-data">
+          <div class="no-data-icon">🏆</div>
+          <h3>Nenhum time encontrado</h3>
+          <p>Não há times cadastrados no sistema.</p>
+          <button class="btn-add-first" (click)="adicionarTime()">
+            ➕ Adicionar Primeiro Time
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal de confirmação de exclusão -->
+  <div *ngIf="timeParaExcluir" class="modal-overlay" (click)="cancelarExclusao()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Confirmar Exclusão</h3>
+      </div>
+      <div class="modal-body">
+        <p>Tem certeza que deseja excluir o time:</p>
+        <p><strong>{{ timeParaExcluir.nome }}</strong> (ID: {{ timeParaExcluir.id }})?</p>
+        <p class="warning-text">Esta ação não pode ser desfeita.</p>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel-modal" (click)="cancelarExclusao()" [disabled]="isExcluindo">
+          Cancelar
+        </button>
+        <button class="btn-confirm-delete" (click)="excluirTime()" [disabled]="isExcluindo">
+          <span *ngIf="isExcluindo" class="loading-spinner"></span>
+          {{ isExcluindo ? 'Excluindo...' : 'Excluir' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
