@@ -50,7 +50,7 @@ export class TimesComponent implements OnInit {
     this.isLoading = true;
     this.errorMessage = '';
     
-    this.http.get<Time[]>('http://localhost:8080/times')
+    this.http.get<Time[]>('https://liga-de-futebol-backend.onrender.com/times')
       .subscribe({
         next: (times) => {
           this.times = times;
@@ -86,7 +86,7 @@ export class TimesComponent implements OnInit {
 
     this.isExcluindo = true;
     
-    this.http.delete(`http://localhost:8080/times/${this.timeParaExcluir.id}`)
+    this.http.delete(`https://liga-de-futebol-backend.onrender.com/times/${this.timeParaExcluir.id}`)
       .subscribe({
         next: () => {
           // Remover o time da lista local

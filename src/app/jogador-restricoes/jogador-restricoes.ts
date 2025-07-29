@@ -40,7 +40,7 @@ export class JogadorRestricoesComponent implements OnInit {
 
   loadRestricoes() {
     // Usando o endpoint correto do back-end
-    this.http.get<JogadorRestricao[]>('http://localhost:8080/jogadorrestricoes')
+    this.http.get<JogadorRestricao[]>('https://liga-de-futebol-backend.onrender.com/jogadorrestricoes')
       .subscribe({
         next: (restricoes) => {
           this.restricoes = restricoes;

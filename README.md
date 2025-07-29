@@ -147,7 +147,7 @@ ng serve --open
 ```
 
 ### 🔧 **Configuração do Back-end**
-- **URL base**: `http://localhost:8080`
+- **URL base**: `https://liga-de-futebol-backend.onrender.com/`
 - **CORS**: Deve estar configurado no Spring Boot para aceitar requisições do front-end
 - **Endpoints**: Todos os endpoints listados acima devem estar funcionais
 

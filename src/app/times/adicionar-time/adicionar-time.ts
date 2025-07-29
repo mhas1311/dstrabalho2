@@ -62,7 +62,7 @@ export class AdicionarTimeComponent implements OnInit {
   }
 
   loadCidades() {
-    this.http.get<Cidade[]>('http://localhost:8080/cidades')
+    this.http.get<Cidade[]>('https://liga-de-futebol-backend.onrender.com/cidades')
       .subscribe({
         next: (cidades) => {
           this.cidades = cidades;
@@ -76,7 +76,7 @@ export class AdicionarTimeComponent implements OnInit {
   }
 
   loadEstadios() {
-    this.http.get<Estadio[]>('http://localhost:8080/estadios')
+    this.http.get<Estadio[]>('https://liga-de-futebol-backend.onrender.com/estadios')
       .subscribe({
         next: (estadios) => {
           this.estadios = estadios;
@@ -108,7 +108,7 @@ export class AdicionarTimeComponent implements OnInit {
         novoTime.estadio = { id: parseInt(formData.estadioId) };
       }
 
-      this.http.post<any>('http://localhost:8080/times', novoTime)
+      this.http.post<any>('https://liga-de-futebol-backend.onrender.com/times', novoTime)
         .subscribe({
           next: (response) => {
             this.isLoading = false;

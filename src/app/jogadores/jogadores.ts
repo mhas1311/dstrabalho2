@@ -44,7 +44,7 @@ export class JogadoresComponent implements OnInit {
     this.isLoading = true;
     this.errorMessage = '';
     
-    this.http.get<Jogador[]>('http://localhost:8080/pessoas')
+    this.http.get<Jogador[]>('https://liga-de-futebol-backend.onrender.com/pessoas')
       .subscribe({
         next: (jogadores) => {
           this.jogadores = jogadores;
@@ -80,7 +80,7 @@ export class JogadoresComponent implements OnInit {
 
     this.isExcluindo = true;
     
-    this.http.delete(`http://localhost:8080/pessoas/${this.jogadorParaExcluir.id}`)
+    this.http.delete(`https://liga-de-futebol-backend.onrender.com/pessoas/${this.jogadorParaExcluir.id}`)
       .subscribe({
         next: () => {
           // Remover o jogador da lista local

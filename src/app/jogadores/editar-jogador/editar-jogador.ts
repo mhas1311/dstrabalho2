@@ -68,7 +68,7 @@ export class EditarJogadorComponent implements OnInit {
   }
 
   loadJogador() {
-    this.http.get<Jogador>(`http://localhost:8080/pessoas/${this.jogadorId}`)
+    this.http.get<Jogador>(`https://liga-de-futebol-backend.onrender.com/pessoas/${this.jogadorId}`)
       .subscribe({
         next: (jogador) => {
           this.jogador = jogador;
@@ -84,7 +84,7 @@ export class EditarJogadorComponent implements OnInit {
   }
 
   loadCidades() {
-    this.http.get<Cidade[]>('http://localhost:8080/cidades')
+    this.http.get<Cidade[]>('https://liga-de-futebol-backend.onrender.com/cidades')
       .subscribe({
         next: (cidades) => {
           this.cidades = cidades;
@@ -124,7 +124,7 @@ export class EditarJogadorComponent implements OnInit {
         jogadorAtualizado.cidade = { id: parseInt(formData.cidadeId) };
       }
 
-      this.http.put<any>(`http://localhost:8080/pessoas/${this.jogadorId}`, jogadorAtualizado)
+      this.http.put<any>(`https://liga-de-futebol-backend.onrender.com/pessoas/${this.jogadorId}`, jogadorAtualizado)
         .subscribe({
           next: (response) => {
             this.isLoading = false;

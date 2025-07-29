@@ -59,7 +59,7 @@ export class ContratosComponent implements OnInit {
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.http.get<Contrato[]>('http://localhost:8080/contratos')
+    this.http.get<Contrato[]>('https://liga-de-futebol-backend.onrender.com/contratos')
       .subscribe({
         next: (contratos) => {
           this.contratos = contratos;
@@ -131,7 +131,7 @@ export class ContratosComponent implements OnInit {
 
   excluirContrato() {
     if (this.contratoToDelete) {
-      this.http.delete(`http://localhost:8080/contratos/${this.contratoToDelete}`)
+      this.http.delete(`https://liga-de-futebol-backend.onrender.com/contratos/${this.contratoToDelete}`)
         .subscribe({
           next: () => {
             this.contratos = this.contratos.filter(c => c.id !== this.contratoToDelete);

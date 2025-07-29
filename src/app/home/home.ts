@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
   }
 
   loadTimes() {
-    this.http.get<Time[]>('http://localhost:8080/times')
+    this.http.get<Time[]>('https://liga-de-futebol-backend.onrender.com/times')
       .subscribe({
         next: (times) => {
           this.times = times;

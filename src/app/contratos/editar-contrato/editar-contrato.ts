@@ -89,7 +89,7 @@ export class EditarContratoComponent implements OnInit {
   }
 
   loadContrato() {
-    this.http.get<Contrato>(`http://localhost:8080/contratos/${this.contratoId}`)
+    this.http.get<Contrato>(`https://liga-de-futebol-backend.onrender.com/contratos/${this.contratoId}`)
       .subscribe({
         next: (contrato) => {
           this.contrato = contrato;
@@ -105,7 +105,7 @@ export class EditarContratoComponent implements OnInit {
   }
 
   loadPessoas() {
-    this.http.get<Pessoa[]>('http://localhost:8080/pessoas')
+    this.http.get<Pessoa[]>('https://liga-de-futebol-backend.onrender.com/pessoas')
       .subscribe({
         next: (pessoas) => {
           this.pessoas = pessoas;
@@ -119,7 +119,7 @@ export class EditarContratoComponent implements OnInit {
   }
 
   loadTimes() {
-    this.http.get<Time[]>('http://localhost:8080/times')
+    this.http.get<Time[]>('https://liga-de-futebol-backend.onrender.com/times')
       .subscribe({
         next: (times) => {
           this.times = times;
@@ -169,7 +169,7 @@ export class EditarContratoComponent implements OnInit {
         contratoAtualizado.time = { id: parseInt(formData.timeId) };
       }
 
-      this.http.put<any>(`http://localhost:8080/contratos/${this.contratoId}`, contratoAtualizado)
+      this.http.put<any>(`https://liga-de-futebol-backend.onrender.com/contratos/${this.contratoId}`, contratoAtualizado)
         .subscribe({
           next: (response) => {
             this.isLoading = false;

@@ -77,7 +77,7 @@ export class EditarTimeComponent implements OnInit {
   }
 
   loadTime() {
-    this.http.get<Time>(`http://localhost:8080/times/${this.timeId}`)
+    this.http.get<Time>(`https://liga-de-futebol-backend.onrender.com/times/${this.timeId}`)
       .subscribe({
         next: (time) => {
           this.time = time;
@@ -93,7 +93,7 @@ export class EditarTimeComponent implements OnInit {
   }
 
   loadCidades() {
-    this.http.get<Cidade[]>('http://localhost:8080/cidades')
+    this.http.get<Cidade[]>('https://liga-de-futebol-backend.onrender.com/cidades')
       .subscribe({
         next: (cidades) => {
           this.cidades = cidades;
@@ -107,7 +107,7 @@ export class EditarTimeComponent implements OnInit {
   }
 
   loadEstadios() {
-    this.http.get<Estadio[]>('http://localhost:8080/estadios')
+    this.http.get<Estadio[]>('https://liga-de-futebol-backend.onrender.com/estadios')
       .subscribe({
         next: (estadios) => {
           this.estadios = estadios;
@@ -147,7 +147,7 @@ export class EditarTimeComponent implements OnInit {
         timeAtualizado.estadio = { id: parseInt(formData.estadioId) };
       }
 
-      this.http.put<any>(`http://localhost:8080/times/${this.timeId}`, timeAtualizado)
+      this.http.put<any>(`https://liga-de-futebol-backend.onrender.com/times/${this.timeId}`, timeAtualizado)
         .subscribe({
           next: (response) => {
             this.isLoading = false;

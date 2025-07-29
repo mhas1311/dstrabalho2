@@ -39,7 +39,7 @@ export class TimeRestricoesComponent implements OnInit {
 
   loadRestricoes() {
     // Usando o endpoint correto do back-end
-    this.http.get<TimeRestricao[]>('http://localhost:8080/timerestricoes')
+    this.http.get<TimeRestricao[]>('https://liga-de-futebol-backend.onrender.com/timerestricoes')
       .subscribe({
         next: (restricoes) => {
           this.restricoes = restricoes;

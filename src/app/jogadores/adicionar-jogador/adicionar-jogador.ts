@@ -52,7 +52,7 @@ export class AdicionarJogadorComponent implements OnInit {
   }
 
   loadCidades() {
-    this.http.get<Cidade[]>('http://localhost:8080/cidades')
+    this.http.get<Cidade[]>('https://liga-de-futebol-backend.onrender.com/cidades')
       .subscribe({
         next: (cidades) => {
           this.cidades = cidades;
@@ -84,7 +84,7 @@ export class AdicionarJogadorComponent implements OnInit {
         novoJogador.cidade = { id: parseInt(formData.cidadeId) };
       }
 
-      this.http.post<any>('http://localhost:8080/pessoas', novoJogador)
+      this.http.post<any>('https://liga-de-futebol-backend.onrender.com/pessoas', novoJogador)
         .subscribe({
           next: (response) => {
             this.isLoading = false;
