@@ -1,2 +1,2 @@
 # dstrabalho2
-Front-end da aplicação: Liga-de-Futebol (TP de DS) 
+Front-end da aplicação: Liga-de-Futebol (Trabalho Prático de Desenvolvimento de Sistemas) 
