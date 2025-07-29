@@ -223,7 +223,7 @@ O sistema está **100% funcional** e pronto para uso com o back-end Spring Boot.
 
 ---
 
-**Desenvolvido usando Angular 18 + TypeScript + CSS3**
+**Desenvolvido por Matheus Henrique A. S., João Pedro S. M. e Lucas Meckler usando Angular 18 + TypeScript + CSS3**
 
 
 
