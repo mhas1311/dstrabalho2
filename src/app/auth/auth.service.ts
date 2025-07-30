@@ -11,6 +11,8 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   token: string;
+  accessToken: string;
+  tokenType: string;
 }
 
 export interface Usuario {
@@ -50,6 +52,8 @@ export class AuthService {
         tap(response => {
           // Armazenar o token no localStorage
           localStorage.setItem(this.TOKEN_KEY, response.token);
+          // Definir o usuário atual (opcional, se você tiver os dados do usuário)
+          localStorage.setItem(this.TOKEN_KEY, `${response.tokenType} ${response.accessToken}`);
         })
       );
   }
