@@ -50,10 +50,8 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${this.API_URL}/auth/login`, loginRequest)
       .pipe(
         tap(response => {
-          // Armazenar o token no localStorage
-          localStorage.setItem(this.TOKEN_KEY, response.token);
-          // Definir o usuário atual (opcional, se você tiver os dados do usuário)
-          localStorage.setItem(this.TOKEN_KEY, `${response.tokenType} ${response.accessToken}`);
+          // Armazenar apenas o token JWT puro
+          localStorage.setItem(this.TOKEN_KEY, response.accessToken);
         })
       );
   }
