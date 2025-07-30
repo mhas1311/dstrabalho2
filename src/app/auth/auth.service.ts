@@ -26,7 +26,7 @@ export interface Usuario {
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly API_URL = 'https://liga-de-futebol-backend.onrender.com/';
+  private readonly API_URL = 'https://liga-de-futebol-backend.onrender.com';
   private readonly TOKEN_KEY = 'auth_token';
   
   private currentUserSubject = new BehaviorSubject<Usuario | null>(null);
